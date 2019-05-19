@@ -1,4 +1,4 @@
-package com.n8ify.spooky.model
+package com.n8ify.spooky.model.spot
 
 import java.sql.Timestamp
 

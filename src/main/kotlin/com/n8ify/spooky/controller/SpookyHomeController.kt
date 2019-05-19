@@ -1,4 +1,4 @@
-package com.n8ify.spooky.controller.rest
+package com.n8ify.spooky.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping

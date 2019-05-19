@@ -1,6 +1,6 @@
 package com.n8ify.spooky.dao
 
-import com.n8ify.spooky.model.Spot
+import com.n8ify.spooky.model.spot.Spot
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Isolation
