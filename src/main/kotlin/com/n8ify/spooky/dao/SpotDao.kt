@@ -64,7 +64,14 @@ class SpotDaoImpl : BaseAbstractDao(), SpotDao {
         val sql = StringBuilder()
         sql.append("UPDATE spot SET tale = ?, description = ?, remark = ?, status = ?, latitude = ?, longitude = ? WHERE id = ?")
 
-        val params = arrayListOf(spot.tale, spot.description, spot.remark, spot.status, spot.latitude, spot.longitude, spot.id)
+        val params = ArrayList<Any?>()
+        params.add(spot.tale)
+        params.add(spot.description)
+        params.add(spot.remark)
+        params.add(spot.status)
+        params.add(spot.latitude)
+        params.add(spot.longitude)
+        params.add(spot.id)
 
         jdbcTemplate!!.update(sql.toString(), params.toArray())}
 }
