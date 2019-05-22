@@ -46,34 +46,27 @@ class SpotDaoImpl : BaseAbstractDao(), SpotDao {
         val sql = StringBuilder()
         sql.append("DELETE FROM spot WHERE id = ?")
 
-        val params = arrayListOf(id)
+        val params = arrayOf(id)
 
-        jdbcTemplate!!.update(sql.toString(), params.toArray())
+        jdbcTemplate!!.update(sql.toString(), params, null)
     }
 
     override fun insert(spot: Spot) {
         val sql = StringBuilder()
         sql.append("INSERT INTO spot (tale, description, remark, status, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)")
 
-        val params = arrayListOf(spot.tale, spot.description, spot.remark, spot.status, spot.latitude, spot.longitude)
+        val params = arrayOf(spot.tale, spot.description, spot.remark, spot.status, spot.latitude, spot.longitude)
 
-        jdbcTemplate!!.update(sql.toString(), params.toArray())
+        jdbcTemplate!!.update(sql.toString(), params, null)
     }
 
     override fun update(spot: Spot) {
         val sql = StringBuilder()
         sql.append("UPDATE spot SET tale = ?, description = ?, remark = ?, status = ?, latitude = ?, longitude = ? WHERE id = ?")
 
-//        val params = ArrayList<Any?>()
-//        params.add(spot.tale)
-//        params.add(spot.description)
-//        params.add(spot.remark)
-//        params.add(spot.status)
-//        params.add(spot.latitude)
-//        params.add(spot.longitude)
-//        params.add(spot.id)
+        val params = arrayOf(spot.tale, spot.description, spot.remark, spot.status, spot.latitude, spot.longitude, spot.id)
 
-        jdbcTemplate!!.update(sql.toString(), spot.tale, spot.description, spot.remark, spot.status, spot.latitude, spot.longitude, spot.id)}
+        jdbcTemplate!!.update(sql.toString(), params, null)}
 }
 
 class SpotRowMapper : RowMapper<Spot> {
