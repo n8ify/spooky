@@ -22,6 +22,14 @@ class SpotController : BaseAbstractController() {
         }
     }
 
+    @PostMapping("/active")
+    fun getActiveSpots(): SpotResponse {
+        return SpotResponse().apply {
+            this.status = getSuccessResponseStatus()
+            this.data = spotService.getAllActiveSpots()
+        }
+    }
+
     @PostMapping("/delete")
     fun deleteSpot(@RequestBody spot: Spot) : SpotResponse {
 
