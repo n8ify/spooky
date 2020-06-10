@@ -16,6 +16,9 @@ interface SpotDao {
     @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED)
     fun querySpots(limit: Int? = FIND_ALL_SPOT): List<Spot>
 
+    @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED)
+    fun queryActiveSpots(limit: Int? = FIND_ALL_SPOT): List<Spot>
+
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     fun delete(id: Int)
 
@@ -24,6 +27,9 @@ interface SpotDao {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     fun update(spot: Spot)
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    fun updateSpotStatus(spot: Spot)
 
 }
 
@@ -39,6 +45,19 @@ class SpotDaoImpl : BaseAbstractDao(), SpotDao {
             return jdbcTemplate!!.query(sql.toString(), params, SpotRowMapper())
         } else {
             return jdbcTemplate!!.query(sql.toString(), SpotRowMapper())
+        }
+    }
+
+    override fun queryActiveSpots(limit: Int?): List<Spot> {
+        val sql = StringBuilder()
+        sql.append("SELECT * FROM spot WHERE status = ? ")
+        if (limit != FIND_ALL_SPOT) {
+            sql.append(" LIMIT = ?")
+            val params = arrayOf(Spot.ACTIVE, limit)
+            return jdbcTemplate!!.query(sql.toString(), params, SpotRowMapper())
+        } else {
+            val params = arrayOf(Spot.ACTIVE)
+            return jdbcTemplate!!.query(sql.toString(), params, SpotRowMapper())
         }
     }
 
@@ -61,6 +80,14 @@ class SpotDaoImpl : BaseAbstractDao(), SpotDao {
         sql.append("UPDATE spot SET tale = ?, description = ?, remark = ?, status = ?, latitude = ?, longitude = ? WHERE id = ?")
 
         jdbcTemplate!!.update(sql.toString(), spot.tale, spot.description, spot.remark, spot.status, spot.latitude, spot.longitude, spot.id)}
+
+    override fun updateSpotStatus(spot: Spot) {
+        val sql = StringBuilder()
+        sql.append("UPDATE spot SET status = ? WHERE id = ?")
+
+        jdbcTemplate!!.update(sql.toString(), spot.status, spot.id)
+    }
+
 }
 
 class SpotRowMapper : RowMapper<Spot> {

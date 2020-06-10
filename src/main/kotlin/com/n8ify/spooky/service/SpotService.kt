@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service
 
 interface SpotService {
     fun getAllSpots() : List<Spot>
+    fun getAllActiveSpots() : List<Spot>
     fun deleteSpot(id : Int)
     fun insertSpot(spot : Spot)
     fun updateSpot(spot : Spot)
+    fun updateSpotStatus(spot : Spot)
 }
 
 @Service
@@ -33,5 +35,13 @@ class SpotServiceImpl : SpotService {
 
     override fun updateSpot(spot: Spot) {
         spotDao.update(spot)
+    }
+
+    override fun getAllActiveSpots(): List<Spot> {
+        return spotDao.queryActiveSpots()
+    }
+
+    override fun updateSpotStatus(spot: Spot) {
+        spotDao.updateSpotStatus(spot)
     }
 }

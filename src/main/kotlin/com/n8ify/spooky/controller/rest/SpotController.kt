@@ -54,4 +54,27 @@ class SpotController : BaseAbstractController() {
             this.data = spotService.getAllSpots()
         }
     }
+
+
+    @PostMapping("/updateStatus")
+    fun updateSpotStatus(@RequestBody spot: Spot) : SpotResponse{
+
+        spotService.updateSpotStatus(spot)
+
+        return SpotResponse().apply {
+            this.status = getSuccessResponseStatus()
+            this.data = spotService.getAllSpots()
+        }
+    }
+
+    @PostMapping("/toggle")
+    fun toggle(@RequestBody spot: Spot) : SpotResponse{
+
+        spotService.updateSpotStatus(spot)
+
+        return SpotResponse().apply {
+            this.status = getSuccessResponseStatus()
+            this.data = spotService.getAllActiveSpots()
+        }
+    }
 }
